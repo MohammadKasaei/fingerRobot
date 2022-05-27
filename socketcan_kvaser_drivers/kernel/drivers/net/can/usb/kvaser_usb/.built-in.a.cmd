@@ -1,0 +1,1 @@
+cmd_/home/mohsen/Documents/Finger_Robot/socketcan_kvaser_drivers/kernel/drivers/net/can/usb/kvaser_usb/built-in.a := rm -f /home/mohsen/Documents/Finger_Robot/socketcan_kvaser_drivers/kernel/drivers/net/can/usb/kvaser_usb/built-in.a; ar cDPrST /home/mohsen/Documents/Finger_Robot/socketcan_kvaser_drivers/kernel/drivers/net/can/usb/kvaser_usb/built-in.a 

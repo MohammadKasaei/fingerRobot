@@ -1,0 +1,171 @@
+/* SPDX-License-Identifier: GPL-2.0
+**
+** Please refer to each source file for complete license and copyright notice
+**
+** IMPORTANT NOTICE:
+** ==============================================================================
+** This source code is made available for free, as an open license, by Kvaser AB,
+** for use with its applications. Kvaser AB does not accept any liability
+** whatsoever for any third party patent or other immaterial property rights
+** violations that may result from any usage of this source code, regardless of
+** the combination of source code and various applications that it can be used
+** in, or with.
+**
+** ------------------------------------------------------------------------------
+*/
+
+This archive contains a beta version of the SocketCAN driver for Kvaser devices.
+The contents of the archive may or may not differ from the latest published
+official version.
+
+Build and installation instruction
+---------------------------------------------------------------------------------
+
+USB installation:
+The usb driver is built by default.
+Remove any attached Kvaser USB devices prior to updating the driver.
+
+% sudo make uninstall
+% make
+% sudo make install
+
+PCIe installation:
+Add the following variable assignment as argument to make:
+  KV_MODULE_NAME=kvaser_pciefd
+
+% sudo make uninstall KV_MODULE_NAME=kvaser_pciefd
+% make KV_MODULE_NAME=kvaser_pciefd
+% sudo make install KV_MODULE_NAME=kvaser_pciefd
+% sudo make load KV_MODULE_NAME=kvaser_pciefd
+
+New Features and Fixed Problems in V1.9.322  (14-SEP-2021)
+===========================================================================
+* kvaser_usb:
+    Fix CAN clock frequency for some Leaf devices.
+
+    Fix version check for can_free_echo_skb().
+
+
+New Features and Fixed Problems in V1.8.211  (26-MAY-2021)
+===========================================================================
+* Adds SocketCAN support to the following devices:
+  Kvaser Hybrid CAN/LIN (01284-4)
+  Kvaser Hybrid Pro CAN/LIN (01288-2)
+
+* kvaser_pciefd:
+    Always disable bus load reporting. Under certain circumstances, when
+    switching from Kvaser's linuxcan driver (kvpciefd) to the SocketCAN driver
+    (kvaser_pciefd), the bus load reporting is not disabled.
+    This is flooding the kernel log with prints like:
+    [3485.574677] kvaser_pciefd 0000:02:00.0: Received unexpected packet type 0x00000009
+
+* Merge upstream:
+  Commit : d07f6ca923ea0927a1024dfccafc5b53b61cfecc
+  Tag    : v5.13-rc2
+  git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+
+
+New Features and Fixed Problems in V1.7.153  (29-MAR-2021)
+===========================================================================
+* Remove invalid ifdef, introduced in v1.6.113.
+
+* Adds SocketCAN support to the following devices:
+  Kvaser USBcan Light 4xHS (00831-1)
+
+
+New Features and Fixed Problems in V1.6.113  (17-FEB-2021)
+===========================================================================
+* Adds SocketCAN support to the following devices:
+  Kvaser Leaf Light R v2 (00921-9)
+  Kvaser USBcan R v2     (00920-2)
+  Kvaser U100            (01173-1)
+  Kvaser U100P           (01174-8)
+  Kvaser U100S           (01181-6)
+
+* Update kcan bittiming limits
+
+* Merge upstream:
+  Commit : 1048ba83fb1c00cd24172e23e8263972f6b5d9ac
+  Tag    : v5.11-rc6
+  git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+
+
+New Features and Fixed Problems in V1.5.0  (10-SEP-2020)
+===========================================================================
+* Minor changes.
+
+
+New Features and Fixed Problems in V1.4.0  (28-MAY-2020)
+---------------------------------------------------------------------------------
+* Minor changes.
+
+New Features and Fixed Problems in V1.3.0  (03-APR-2020)
+---------------------------------------------------------------------------------
+* No changes
+
+New Features and Fixed Problems in V1.2.0  (25-FEB-2020)
+---------------------------------------------------------------------------------
+* Upstream changes merged :
+  Commit : 2d77bd61a2927be8f4e00d9478fe6996c47e8d45
+  Tag    : linux-can-fixes-for-5.5-20200102
+  https://git.kernel.org/pub/scm/linux/kernel/git/mkl/linux-can.git
+
+New Features and Fixed Problems in V1.1 (09-OCT-2019)
+---------------------------------------------------------------------------------
+* Initial release
+
+New Features and Fixed Problems in V1.0 (Internal release)
+---------------------------------------------------------------------------------
+* kvaser_pciefd bugfix:
+     The system clock frequency for the bus connected to the PCIe controller
+     shall be used when calculating PWM, not the CAN system clock frequency.
+
+New Features and Fixed Problems in V0.5 (23-OCT-2018)
+---------------------------------------------------------------------------------
+* Installation instruction updated
+
+New Features and Fixed Problems in V0.4 (24-AUG-2018)
+---------------------------------------------------------------------------------
+* Source file moved up one level
+* Updated after review
+
+Known issues:
+- None
+
+New Features and Fixed Problems in V0.3 (21-JUNE-2018)
+---------------------------------------------------------------------------------
+* Fixed known issue with timeout during bus on flush after boot.
+* Source code updated in order to match module name kvaser_pciefd.
+
+Known issues:
+- None.
+
+
+New Features and Fixed Problems in V0.2 (18-JUNE-2018)
+---------------------------------------------------------------------------------
+First beta of the kvaser_pciefd driver.
+Adds SocketCAN support to the following PCIE/MiniPCIE cards:
+
+  KVASER PCIEcan 2xHS v2       (0861-8)
+  KVASER PCIEcan 4xHS          (0683-6)
+  KVASER PCIEcan   HS v2       (0866-3)
+  KVASER Mini PDI Express 2xHS (0743-7)
+  KVASER Mini PCI Express   HS (0688-1)
+
+Note: This archive contains the kvaser_pciefd driver only!
+
+Known issues:
+- Timeout during bus on flush, typically after boot:
+
+  [  100.752049] kvaser_pciefd 0000:05:00.0 can0: Timeout during bus on flush
+
+  Solution: Remove and re-load driver i.e.
+
+    % sudo modprobe -r kvaser_pciefd
+    % sudo modprobe kvaser_pciefd
+
+
+New Features and Fixed Problems in V0.1 (30-MAY-2018)
+---------------------------------------------------------------------------------
+First version of the readme file.
+Internal version of kvaser_usb driver with support for leaf and hydra devices.
